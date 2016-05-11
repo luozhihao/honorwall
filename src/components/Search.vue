@@ -16,7 +16,7 @@
                         <th width="10%">姓名</th>
                         <th width="15%">项目名称</th>
                         <th width="15%">申报时间</th>
-                        <th width="25%">项目简介</th>
+                        <th width="25%">应用场景</th>
                         <th width="5%">平均分</th>
                         <th width="10%">当前阶段</th>
                         <th width="10%">操作</th>

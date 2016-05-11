@@ -5,7 +5,7 @@
                 <span>×</span>
             </button>
             <h4 class="modal-title">
-                申报查看 <span class="text-danger notice">修改提交后项目将重新回到初审阶段</span>
+                申报查看
             </h4>
         </div>
         <div slot="modal-body" class="modal-body">
@@ -37,7 +37,7 @@ export default {
 
         // 确认修改
         confirmFn () {
-            this.$broadcast('open-confirm')
+            this.$broadcast('open-confirm', '修改提交后项目将重新回到初审阶段')
         }
     },
     components: {
@@ -80,8 +80,5 @@ export default {
 </script>
 
 <style scoped>
-.notice {
-    margin-left: 232px;
-    font-size: 15px;
-}
+
 </style>

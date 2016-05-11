@@ -10,7 +10,7 @@
             </h4>
         </div>
         <div slot="modal-body" class="modal-body">
-            <h4 class="text-center">是否确认操作？</h4>
+            <h4 class="text-center" v-text="msg"></h4>
         </div>
         <div slot="modal-footer" class="modal-footer">
             <button type="button" class="btn btn-warning" @click="okFn">
@@ -29,7 +29,8 @@
 export default {
     data () {
         return {
-            confirmModal: false
+            confirmModal: false,
+            msg: ''
         }
     },
     methods: {
@@ -45,7 +46,8 @@ export default {
         modal: require('vue-strap').modal,
     },
     events: {
-        'open-confirm' () {
+        'open-confirm' (data) {
+            this.msg = data
             this.confirmModal = true
         }
     }

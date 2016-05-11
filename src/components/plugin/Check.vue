@@ -57,6 +57,7 @@
         <div slot="modal-footer" class="modal-footer text-center">
             <button type="button" class="btn btn-primary btn-box" @click="checkFn('accept')" v-if="isFinished === 0">通过</button>
             <button type="button" class="btn btn-danger btn-box" @click="checkFn('decline')" v-if="isFinished === 0">不通过</button>
+            <button type="button" class="btn btn-default btn-box" @click="closeFn">取消</button>
         </div>
     </modal>
 </template>
