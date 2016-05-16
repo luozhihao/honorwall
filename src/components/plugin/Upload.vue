@@ -1,5 +1,12 @@
 <template>
     <form id="file_form" class="form-horizontal">
+        <div class="form-group" v-if="!showBtn">
+            <label class="control-label col-sm-3">当前状态：</label>
+            <div class="col-sm-6">
+                <span class="unedit-element text-warning" v-text="status"></span>
+                <span class="unedit-element text-danger" v-if="timeline !== -1">(<span v-text="timeline"></span>天后结束)</span>
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-sm-3">奖项类型：<span class="text-danger">*</span></label>
             <div class="col-sm-6">
@@ -67,6 +74,8 @@ var origin,
         tech: '',
         path: '',
         road: '',
+        status: '',
+        timeline: -1,
         showBtn: true,
         isFinished: 0
     }
@@ -170,5 +179,8 @@ export default {
 </script>
 
 <style scoped>
-
+.unedit-element {
+    padding-top: 7px;
+    display: inline-block;
+}
 </style>

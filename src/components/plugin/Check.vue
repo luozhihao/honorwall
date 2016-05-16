@@ -26,6 +26,7 @@
                     <label class="control-label col-sm-3">当前状态：</label>
                     <div class="col-sm-6">
                         <span class="unedit-element text-warning" v-text="status"></span>
+                        <span class="unedit-element text-danger" v-if="timeline !== -1">(<span v-text="timeline"></span>天后结束)</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,12 +53,26 @@
                         <textarea class="form-control disabled" rows="3" v-text="tech" disabled></textarea>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">评分：<span class="text-danger">*</span></label>
+                    <div class="col-sm-6">
+                        <radio-group :value.sync="scoreOrigin" type="default" v-if="scoreValue === '0' && (status === '初审中' || status === '终审中')">
+                            <radio value="20">20</radio>
+                            <radio value="40">40</radio>
+                            <radio value="60">60</radio>
+                            <radio value="80">80</radio>
+                            <radio value="100">100</radio>
+                        </radio-group>
+                        <span class="unedit-element" v-if="scoreValue !== '0'">此阶段您已评过分，分值为<span class="text-danger" v-text="scoreValue"></span></span>
+                        <span class="unedit-element" v-if="scoreValue === '0' && status === '用户评估中'">此阶段您无需评分</span>
+                        <span class="unedit-element" v-if="scoreValue === '0' && (status === '评审结束' || status === '未通过评审')">评审已结束</span>
+                    </div>
+                </div>
             </form>
         </div>
         <div slot="modal-footer" class="modal-footer text-center">
-            <button type="button" class="btn btn-primary btn-box" @click="checkFn('accept')" v-if="isFinished === 0">通过</button>
-            <button type="button" class="btn btn-danger btn-box" @click="checkFn('decline')" v-if="isFinished === 0">不通过</button>
-            <button type="button" class="btn btn-default btn-box" @click="closeFn">取消</button>
+            <button type="button" class="btn btn-primary btn-box" @click="checkFn()" v-if="(status === '初审中' || status === '终审中') && scoreValue === '0'" :disabled="scoreOrigin !== '0' ? false : true">提交</button>
+            <button type="button" class="btn btn-default btn-box" @click="closeFn">关闭</button>
         </div>
     </modal>
 </template>
@@ -69,11 +84,14 @@ var origin = {
     type_label: '',
     apply_time: '',
     status: '',
+    timeline: -1,
     name: '',
     scene: '',
     solve: '',
     tech: '',
-    isFinished: 0
+    isFinished: 0,
+    scoreValue: '0',
+    scoreOrigin: '0'
 }
 
 export default {
@@ -88,25 +106,33 @@ export default {
         },
 
         // 审核
-        checkFn (pass) {
+        checkFn () {
             this.$http({
-                url: '/honor/change_status/',
+                url: '/honor/judge_score/',
                 method: 'POST',
                 data: {
-                    action: pass,
-                    apply_id: this.idNum
+                    apply_id: this.idNum,
+                    scoreValue: this.scoreOrigin
                 }
             })
             .then(function (response) {
                 if (response.data.status === 200) {
                     this.viewModal = false
                     this.$dispatch('refresh')
+
+                    this.$dispatch('show-success', '评分成功！')
+                } else {
+                    this.$dispatch('show-error')
                 }
+            }, function () {
+                this.$dispatch('show-error')
             })
         }
     },
     components: {
-        modal: require('vue-strap').modal
+        modal: require('vue-strap').modal,
+        radio: require('vue-strap').radioBtn,
+        radioGroup: require('vue-strap').radioGroup
     },
     events: {
         'check-modal' (data) {

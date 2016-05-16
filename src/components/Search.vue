@@ -13,12 +13,13 @@
             <table class="table table-hover table-bordered mt30">
                 <thead>
                     <tr>
-                        <th width="10%">姓名</th>
+                        <th width="7%">姓名</th>
                         <th width="15%">项目名称</th>
-                        <th width="15%">申报时间</th>
-                        <th width="25%">应用场景</th>
-                        <th width="5%">平均分</th>
+                        <th width="12%">申报时间</th>
+                        <th width="20%">应用场景</th>
                         <th width="10%">当前阶段</th>
+                        <th width="8%">当前评审人数</th>
+                        <th width="8%">加权平均分</th>
                         <th width="10%">操作</th>
                     </tr>
                 </thead>
@@ -28,8 +29,9 @@
                         <td v-text="list.product" :title="list.product"></td>
                         <td v-text="list.time"></td>
                         <td v-text="list.introduce" :title="list.introduce"></td>
-                        <td v-text="list.score" :title="list.score"></td>
                         <td v-text="list.status" :class="list.status === '评审结束' ? 'text-success' : 'text-warning'"></td>
+                        <td v-text="list.person" :title="list.person"></td>
+                        <td v-text="list.score" :title="list.score"></td>
                         <td>
                             <button type="button" class="btn btn-default btn-small mr15" v-if="list.is_author" @click="modifyFn($index)">
                                 <span class="glyphicon glyphicon-pencil"></span>

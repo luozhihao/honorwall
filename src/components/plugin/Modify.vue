@@ -12,7 +12,7 @@
             <upload></upload>
         </div>
         <div slot="modal-footer" class="modal-footer text-center">
-            <button type="button" class="btn btn-primary btn-box" @click="confirmFn()" v-if="isFinished === 0">确认</button>
+            <button type="button" class="btn btn-primary btn-box" @click="confirmFn()" v-if="isFinished === 0">修改</button>
             <button type="button" class="btn btn-default btn-box" @click="closeFn()" v-if="isFinished === 0">取消</button>
         </div>
     </modal>

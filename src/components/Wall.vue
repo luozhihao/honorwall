@@ -49,10 +49,10 @@
                     <table class="table project-table table-hover">
                         <thead>
                             <tr>
-                                <th width="30%">项目</th>
+                                <th width="30%">项目名称</th>
                                 <th width="15%">姓名</th>
                                 <th width="15%">类型</th>
-                                <th width="15%">时间</th>
+                                <th width="15%">获奖时间</th>
                                 <th width="15%">分数</th>
                                 <th width="10%">下载</th>
                             </tr>
@@ -110,15 +110,19 @@ export default {
             })
         }
     },
-    ready () {
+    compiled () {
         let date = new Date(),
             year = date.getFullYear()
 
         this.year = year
+
+        this.refresh()
     },
     watch: {
-        'year' (newVal) {
-            this.refresh()
+        'year' (newVal, oldVal) {
+            if (oldVal  !== '') {
+                this.refresh()
+            }
         }
     }
 }
